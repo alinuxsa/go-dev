@@ -20,7 +20,7 @@ jobs:
     - name: Login docker hub
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
       with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ secret.DOCKER_USERNAME }}
+        password: ${{ secret.DOCKER_PASSWORD }}
     - name: Push Docker Image
       run: docker push alinuxsa/go-dev:1.17.5
