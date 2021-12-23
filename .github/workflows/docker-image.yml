@@ -19,8 +19,8 @@ jobs:
       
     - name: Login docker hub
       env: 
-        DOCKER_USER: ${secret.DOCKER_USER}
-        DOCKER_PASSWORD: ${secret.DOCKER_PASSWORD}
-      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        DOCKER_USER: ${secret.DOCKER_USERNAME}
+        DOCKER_PASSWORD: ${secret.DOCKER_USERNAME}
+      run: echo $DOCKER_PASSWORD |  docker login -u $DOCKER_USER --password-stdin
     - name: Push Docker Image
       run: docker push alinuxsa/go-dev:1.17.5
