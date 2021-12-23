@@ -3,7 +3,7 @@ FROM almalinux:latest
 # ADD go1.17.5.linux-amd64.tar.gz /usr/local
 
 RUN curl -L -O https://go.dev/dl/go1.17.5.linux-amd64.tar.gz && \
-  tar xvf go1.17.5.linux-amd64.tar.gz -C /usr/local/ && \
+  tar xf go1.17.5.linux-amd64.tar.gz -C /usr/local/ && \
   rm -rf go1.17.5.linux-amd64.tar.gz
 
 ENV PATH="/usr/local/go/bin:${PATH}"
