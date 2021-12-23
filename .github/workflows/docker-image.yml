@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
     - name: Login docker hub
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag alinuxsa/go-dev:1.17.5
     - name: Push Docker Image
