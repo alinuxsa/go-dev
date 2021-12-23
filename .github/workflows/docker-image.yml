@@ -21,6 +21,6 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag alinuxsa/go-dev:${{ VERSION }}
+      run: docker build . --file Dockerfile --tag alinuxsa/go-dev:${{ env.VERSION }}
     - name: Push Docker Image
-      run: docker push alinuxsa/go-dev:${{ VERSION }}
+      run: docker push alinuxsa/go-dev:${{ env.VERSION }}
