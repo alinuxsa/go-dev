@@ -23,11 +23,11 @@ jobs:
       - name: set-output
         id: set-output-id
         run: |
-        VERSION=edge
-        if [[ $GITHUB_REF == refs/tags/* ]]; then
-          VERSION=${GITHUB_REF#refs/tags/v}
-        fi
-        echo ::set-output name=tags::${VERSION}
+          VERSION=edge
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+          fi
+          echo ::set-output name=tags::${VERSION}
   push-image:
     runs-on: ubuntu-latest
     env:
