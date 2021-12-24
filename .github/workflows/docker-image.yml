@@ -33,5 +33,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            alinuxsa/go-dev:${{ steps.get_version.outputs.tag }}
+            alinuxsa/go-dev:${{github.ref_name}}
             alinuxsa/go-dev:latest 
