@@ -8,14 +8,12 @@ on:
   # pull_request:
   #   branches: [ main ]
 
-env:
-  IMAGE_NAME: go-dev
-
 jobs:
   ci-image:
     runs-on: ubuntu-latest
     env:
       TZ: Asia/Shanghai
+      IMAGE_NAME: go-dev
     steps:
       - uses: actions/checkout@v2
       - name: Set Tag
