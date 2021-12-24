@@ -12,23 +12,7 @@ env:
   IMAGE_NAME: go-dev
 
 jobs:
-  get-tags:
-    runs-on:  ubuntu-latest
-    env:
-      TZ: Asia/Shanghai
-    outputs:
-      tags: ${{ steps.set-output-id.outputs.tags }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: set-output
-        id: set-output-id
-        run: |
-          VERSION=edge
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/v}
-          fi
-          echo ::set-output name=tags::${VERSION}
-  push-image:
+  ci-image:
     runs-on: ubuntu-latest
     env:
       TZ: Asia/Shanghai
@@ -46,5 +30,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            alinuxsa/go-dev:${{ needs.get-tags.outputs.tags }}
+            alinuxsa/go-dev:${{ github.ref }}
             alinuxsa/go-dev:latest 
