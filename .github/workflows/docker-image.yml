@@ -17,6 +17,9 @@ jobs:
     env:
       TZ: Asia/Shanghai
     steps:
+      - name: Get tag
+        id: get_tag
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - uses: actions/checkout@v2
       - name: Login docker hub
         uses: docker/login-action@v1
@@ -30,5 +33,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            alinuxsa/go-dev:${{ github.ref }}
+            alinuxsa/go-dev:${{ steps.get_version.outputs.VERSION }}
             alinuxsa/go-dev:latest 
