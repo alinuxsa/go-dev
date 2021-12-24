@@ -32,5 +32,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            alinuxsa/${env.IMAGE_NAME}:${{ env.TAG }}
-            alinuxsa/${env.IMAGE_NAME}:latest 
+            alinuxsa/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+            alinuxsa/${{ env.IMAGE_NAME }}:latest 
