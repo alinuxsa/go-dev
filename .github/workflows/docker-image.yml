@@ -1,26 +1,50 @@
 name: Docker Image CI
 
 on:
+  workflow_dispatch: 
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - "v*.*"
+  # pull_request:
+  #   branches: [ main ]
+
+env:
+  IMAGE_NAME: go-dev
 
 jobs:
-
-  build:
-
+  get-tags:
+    runs-on:  ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    outputs:
+      tags: ${{ steps.set-output-id.outputs.tags }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: set-output
+        id: set-output-id
+        run: |
+        VERSION=edge
+        if [[ $GITHUB_REF == refs/tags/* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/v}
+        fi
+        echo ::set-output name=tags::${VERSION}
+  push-image:
     runs-on: ubuntu-latest
     env:
-      VERSION: latest
+      TZ: Asia/Shanghai
     steps:
-    - name: Login docker hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag alinuxsa/go-dev:${{ env.VERSION }}
-    - name: Push Docker Image
-      run: docker push alinuxsa/go-dev:${{ env.VERSION }}
+      - uses: actions/checkout@v2
+      - name: Login docker hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build && Push
+        uses: docker/build-push-action@v2
+        with: 
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            alinuxsa/go-dev:${{ needs.get-tags.outputs.tags }}
+            alinuxsa/go-dev:latest 
